@@ -43,8 +43,7 @@ findValueDecl q src =
       <> _ValD . _VarBind . _1 . to (nameQuery q)
       <> _SigD . _TypeSig . _1 . to (any (nameQuery q . unLoc))
 
-matchDecls
-  :: ParsedSource -> (HsDecls.HsDecl GHC.GhcPs -> Bool) -> [SearchResult]
+matchDecls :: ParsedSource -> (HsDecls.HsDecl GHC.GhcPs -> Bool) -> [SearchResult]
 matchDecls (ParsedSource (anns, locMod)) p =
   fmap (SearchResult anns) $
     L.filter (p . unLoc) (locMod ^. _unloc . _hsmodDecls)
